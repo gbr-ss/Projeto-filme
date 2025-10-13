@@ -15,6 +15,9 @@ if menu == "Catalogo":
     st.subheader("Todos os filmes disponiveis")
     response = requests.get(f"{API_URL}/filmes")
     if response.status_code == 200:
-        filmes = response.json()
+        filmes = response.json().get("filmes",[])
+        if filmes:
+            for filme in filmes:
+                st.write(f"{filme['titulo']}")
     else:
         st.error("Erro ao acessar a API")
