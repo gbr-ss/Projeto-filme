@@ -36,7 +36,7 @@ def inserir_filmes(titulo, genero, ano ,avaliacao):
             cursor.close()
             conexao.close()
 
-def listar_filmes():
+def exibir_filmes():
     conexao, cursor = conectar()
     if conexao:
         try:
