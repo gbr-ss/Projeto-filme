@@ -29,4 +29,13 @@ def criar_filmes(titulo: str, genero: str, ano: int, avaliacao: float):
 @app.get("/filmes")
 def listar_filmes():
     filmes = funcao.listar_filme()
-    
+    lista = []
+    for linha in filmes:
+        lista.append({
+            "id": linha[0],           
+            "titulo": linha[1],
+            "genero": linha[2],
+            "ano": linha[3],
+            "avaliação":linha[4]
+            })
+    return{"filme": lista}
