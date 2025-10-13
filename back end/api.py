@@ -38,4 +38,4 @@ def listar_filmes():
             "ano": linha[3],
             "avaliação":linha[4]
             })
-    return{"filme": lista}
+    return{"filmes": lista}

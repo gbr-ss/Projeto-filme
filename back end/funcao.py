@@ -5,7 +5,7 @@ def criar_tabela():
     if conexao:
         try:
             cursor.execute("""
-            CREATE TABLE IF NOT EXISTS filme (
+            CREATE TABLE IF NOT EXISTS filmes (
             id SERIAL PRIMARY KEY,
             titulo TEXT NOT NULL,
             genero TEXT NOT NULL,
@@ -21,59 +21,59 @@ def criar_tabela():
             conexao.close()
 criar_tabela()
 
-def inserir_filme(titulo, genero, ano ,avaliacao):
+def inserir_filmes(titulo, genero, ano ,avaliacao):
     conexao, cursor = conectar()
     if conexao:
         try:
             cursor.execute(
-                "INSERT INTO filme (titulo, genero, ano, avaliacao) VALUES (%s, %s, %s, %s)",
+                "INSERT INTO filmes (titulo, genero, ano, avaliacao) VALUES (%s, %s, %s, %s)",
                 (titulo, genero, ano, avaliacao)
             )
             conexao.commit()
         except Exception as erro:
-            print(f"Erro ao inserir filme {erro}")
+            print(f"Erro ao inserir filmes {erro}")
         finally:
             cursor.close()
             conexao.close()
 
-def listar_filme():
+def listar_filmes():
     conexao, cursor = conectar()
     if conexao:
         try:
             cursor.execute(
-                "SELECT * FROM filme",
+                "SELECT * FROM filmes",
                 ()
             )
             return cursor.fetchall()
         except Exception as erro:
-            print(f"Erro ao mostrar  o filme")
+            print(f"Erro ao mostrar  o filmes")
         finally:
             cursor.close()
             conexao.close()
 
-def atualizar_filme(id_filme, nova_avaliacao):
+def atualizar_filmes(id_filmes, nova_avaliacao):
     conexao, cursor = conectar()
     if conexao:
         try:
             cursor.execute(
-                "UPDATE filme SET avaliacao = %s WHERE id = %s",
-                (nova_avaliacao, id_filme)
+                "UPDATE filmes SET avaliacao = %s WHERE id = %s",
+                (nova_avaliacao, id_filmes)
             )
             conexao.commit()
         except Exception as erro:
-            print(f"Erro ao tentar atuaizar o filme {erro}")
+            print(f"Erro ao tentar atuaizar o filmes {erro}")
         finally:
             cursor.close()
             conexao.close()
 
-def deletar_filme(id_filme):
+def deletar_filmes(id_filmes):
     conexao, cursor = conectar()
     if conexao:
         try:
-            cursor.execute("DELETE FROM filme WHERE id = ?", (id_filme))
+            cursor.execute("DELETE FROM filmes WHERE id = ?", (id_filmes))
             conexao.commit()
         except Exception as erro:
-            print(f"Erro ao deletar o filme ")
+            print(f"Erro ao deletar o filmes ")
         finally:
             cursor.close()
             conexao.close()
