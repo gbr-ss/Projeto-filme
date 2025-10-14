@@ -41,8 +41,7 @@ def exibir_filmes():
     if conexao:
         try:
             cursor.execute(
-                "SELECT * FROM filmes",
-                ()
+                "SELECT * FROM filmes ORDER BY id"
             )
             return cursor.fetchall()
         except Exception as erro:
@@ -70,10 +69,23 @@ def deletar_filmes(id_filmes):
     conexao, cursor = conectar()
     if conexao:
         try:
-            cursor.execute("DELETE FROM filmes WHERE id = ?", (id_filmes))
+            cursor.execute("DELETE FROM filmes WHERE id = ?", (id_filmes,))
             conexao.commit()
         except Exception as erro:
             print(f"Erro ao deletar o filmes ")
+        finally:
+            cursor.close()
+            conexao.close()
+def buscar_filmes(id_filmes):    
+    conexao, cursor = conectar()
+    if conexao:
+        try:
+            cursor.execute(
+                "SELECT * FROM filmes WHERE  id = %s", (id_filmes,)
+            )
+            return cursor.fetchone()
+        except Exception as erro:
+            print(f"Erro ao mostrar  o filmes")
         finally:
             cursor.close()
             conexao.close()

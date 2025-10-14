@@ -18,17 +18,17 @@ app = FastAPI(title="Gerenciador de Filmes")
 
 @app.get("/")
 def home():
-    return {"mensagem": "Quero ir para casa🏠"}
+    return {"mensagem": "Bem-Vindo ao Gerenciador de Filmes"}
 
 
 @app.post("/filmes")
 def criar_filmes(titulo: str, genero: str, ano: int, avaliacao: float):
-    funcao.inserir_filme(titulo, genero, ano, avaliacao)
+    funcao.inserir_filmes(titulo, genero, ano, avaliacao)
     return{"mensagem": "Filme adicionado com sucesso"}
 
 @app.get("/filmes")
 def listar_filmes():
-    filmes = funcao.listar_filmes()
+    filmes = funcao.exibir_filmes()
     lista = []
     for linha in filmes:
         lista.append({
@@ -39,3 +39,12 @@ def listar_filmes():
             "avaliação":linha[4]
             })
     return{"filmes": lista}
+
+@app.put("/filmes/{id_filmes}")
+def atulizar_filmes(id_filme: int,nova_avalicao:float):
+    filme = funcao.buscar_filme(id_filme)
+    if filme:
+        funcao.atualizar_filme(id_filme, nova_avalicao)
+        return{"mensagem": "Filme atualizado com sucesso!"}
+    else:
+        return {"erro": "Filme não encontrado"}
