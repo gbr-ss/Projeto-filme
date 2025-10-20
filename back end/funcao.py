@@ -69,7 +69,7 @@ def deletar_filmes(id_filmes):
     conexao, cursor = conectar()
     if conexao:
         try:
-            cursor.execute("DELETE FROM filmes WHERE id = ?", (id_filmes,))
+            cursor.execute("DELETE FROM filmes WHERE id = %s", (id_filmes,))
             conexao.commit()
         except Exception as erro:
             print(f"Erro ao deletar o filmes ")
